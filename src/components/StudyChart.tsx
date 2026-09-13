@@ -1,0 +1,5 @@
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+
+export default function StudyChart({ values }: { values: { day: string; minutes: number }[] }) {
+  return <div className="chart" role="img" aria-label={`Study minutes over the last seven days: ${values.map(day => `${day.day} ${day.minutes}`).join(', ')}`}><ResponsiveContainer width="100%" height="100%"><BarChart data={values} margin={{ top: 12, right: 0, left: -24, bottom: 0 }}><CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 4" /><XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: 'var(--muted)', fontSize: 12 }} /><YAxis axisLine={false} tickLine={false} allowDecimals={false} tick={{ fill: 'var(--muted)', fontSize: 11 }} /><Tooltip cursor={{ fill: 'var(--surface-alt)' }} contentStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, color: 'var(--text)' }} formatter={value => [`${value} min`, 'Study']} /><Bar dataKey="minutes" fill="var(--accent)" radius={[4, 4, 0, 0]} maxBarSize={28} /></BarChart></ResponsiveContainer></div>
+}
