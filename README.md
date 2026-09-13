@@ -18,6 +18,7 @@ Your private, local-first command center for productivity, learning, finance, an
 - **AI Insights** — Optional AI-powered daily insights and "Ask My Data" queries
 - **Backup/Restore** — Export and import all personal data as validated JSON
 - **PWA** — Installable, responsive, offline-capable
+- **Notifications** — Browser notification reminders for daily tasks and focus sessions
 
 ## Screenshots
 
@@ -56,13 +57,50 @@ npm run preview
 
 ## Vercel Deployment
 
-1. Push to GitHub
-2. Import the repository in Vercel
-3. Set build command: `npm run build`
-4. Set output directory: `dist`
-5. Deploy
+### Quick Deploy (Recommended)
 
-The `vercel.json` config handles rewrites for the SPA and PWA service worker.
+1. Push to GitHub
+2. Go to [vercel.com](https://vercel.com) and import the repository
+3. Framework preset: **Vite**
+4. Build command: `npm run build`
+5. Output directory: `dist`
+6. Install command: `npm install`
+7. Click **Deploy**
+
+### Manual CLI Deploy
+
+```bash
+npm install -g vercel
+vercel
+# Follow prompts to link the project
+vercel --prod
+```
+
+### Vercel Configuration
+
+The `vercel.json` configures:
+- SPA rewrites for client-side routing
+- Service worker headers for PWA support
+- Security headers
+
+### Environment Variables (Optional)
+
+No required environment variables. AI is optional and configured on the **Insights** page:
+
+- `VITE_AI_ENDPOINT` — OpenAI-compatible chat-completions endpoint (HTTPS or localhost)
+- `VITE_AI_MODEL` — Model name
+- `VITE_AI_API_KEY` — API key (never stored or backed up)
+
+These are only entered in the UI, never committed, and never included in exports.
+
+### Verifying Deployment
+
+After deploying:
+1. Confirm the app loads at the Vercel URL
+2. Check the console for no errors
+3. Verify the PWA manifest loads (`/manifest.webmanifest`)
+4. Confirm the service worker is active
+5. Test offline capability by reloading with DevTools offline mode
 
 ## Environment Variables (Optional)
 
