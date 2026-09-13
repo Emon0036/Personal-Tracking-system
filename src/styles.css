@@ -343,6 +343,12 @@ input[type=checkbox] { accent-color: var(--accent); width: 15px; height: 15px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .sidebar-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 35; }
 
+/* Notifications */
+.notification-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; font-size: 12px; }
+.notification-item strong { font-size: 13px; }
+.notification-list { max-height: 240px; overflow-y: auto; }
+.notification-item .small { font-size: 10px; }
+.notification-item:hover { background: var(--surface-alt); }
 @media (max-width: 700px) {
   .sidebar { transform: translateX(-100%); width: 260px; transition: transform 0.2s ease; }
   .sidebar.open { transform: translateX(0); }

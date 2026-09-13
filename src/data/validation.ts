@@ -44,7 +44,10 @@ export function validateData(input: unknown): Data {
   assert(['system', 'light', 'dark'].includes(String(settings.theme)), 'Invalid theme.')
   assert(typeof settings.currency === 'string' && /^[A-Z]{3}$/.test(settings.currency), 'Currency must be a three-letter code.')
   for (const key of ['interests', 'financeCategories']) assert(Array.isArray(settings[key]) && settings[key].length <= 100 && settings[key].every(v => typeof v === 'string' && v.length <= 100), `Invalid ${key}.`)
-  result.settings = { name: settings.name, theme: settings.theme as Data['settings']['theme'], currency: settings.currency, interests: [...settings.interests as string[]], financeCategories: [...settings.financeCategories as string[]] }
+  const notifications = input.notifications ?? []
+  assert(Array.isArray(notifications) && notifications.length <= 100, 'Invalid notifications list.')
+  for (const n of notifications) { assert(typeof n.title === 'string' && typeof n.body === 'string' && typeof n.time === 'string' && typeof n.sent === 'boolean' && n.id && n.id.length <= 100, 'Invalid notification format.') }
+  result.settings = { name: settings.name, theme: settings.theme as Data['settings']['theme'], currency: settings.currency, interests: [...settings.interests as string[]], financeCategories: [...settings.financeCategories as string[]], notifications: notifications.map(n => ({ ...n })) }
   const timer = input.timer
   assert(object(timer) && (timer.startedAt === null || (typeof timer.startedAt === 'number' && Number.isFinite(timer.startedAt) && timer.startedAt >= 0 && timer.startedAt <= Date.now() + 60000)) && typeof timer.elapsed === 'number' && Number.isFinite(timer.elapsed) && timer.elapsed >= 0 && timer.elapsed <= 1e12, 'Invalid timer state.')
   for (const key of ['topic', 'course', 'skill', 'category', 'notes']) assert(typeof timer[key] === 'string' && timer[key].length <= 50000, `Invalid timer ${key}.`)

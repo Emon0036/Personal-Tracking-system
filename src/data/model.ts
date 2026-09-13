@@ -2,7 +2,8 @@ export const collections = ['tasks', 'habits', 'studySessions', 'courses', 'skil
 export type Collection = typeof collections[number]
 export type Value = string | number | string[]
 export interface Entry { id: string; createdAt: string; updatedAt: string; [key: string]: Value }
-export interface Settings { name: string; theme: 'system' | 'light' | 'dark'; currency: string; interests: string[]; financeCategories: string[] }
+export interface Notification { id: string; title: string; body: string; time: string; sent: boolean }
+export interface Settings { name: string; theme: 'system' | 'light' | 'dark'; currency: string; interests: string[]; financeCategories: string[]; notifications: Notification[] }
 export interface Timer { startedAt: number | null; elapsed: number; topic: string; course: string; skill: string; category: string; notes: string }
 export type Data = Record<Collection, Entry[]> & { schemaVersion: 1; settings: Settings; timer: Timer }
 export interface Field { key: string; label: string; type?: 'text' | 'textarea' | 'number' | 'date' | 'url' | 'select' | 'tags' | 'topics'; options?: string[]; required?: boolean; min?: number; max?: number; relation?: Collection }
@@ -32,7 +33,7 @@ export const modules: Record<Collection, Module> = {
 }
 export function emptyData(): Data {
   return { ...Object.fromEntries(collections.map(key => [key, []])), schemaVersion: 1,
-    settings: { name: '', theme: 'system', currency: 'BDT', interests: ['AI', 'Machine Learning', 'Software Engineering'], financeCategories: ['Food', 'Transport', 'Education', 'Housing', 'Health', 'Entertainment', 'Salary', 'Other'] },
+    settings: { name: '', theme: 'system', currency: 'BDT', interests: ['AI', 'Machine Learning', 'Software Engineering'], financeCategories: ['Food', 'Transport', 'Education', 'Housing', 'Health', 'Entertainment', 'Salary', 'Other'], notifications: [] as Notification[] },
     timer: { startedAt: null, elapsed: 0, topic: '', course: '', skill: '', category: '', notes: '' },
   } as Data
 }
